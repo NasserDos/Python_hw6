@@ -1,3 +1,15 @@
+commit bd753005942ea45439080ab318234bf6ad9998bb
+Author: NasserDos <nasserbinshabeeb@mail.weber.edu>
+Date:   Sat Mar 18 16:03:40 2017 -0600
+
+    ranking works, results indicate that the regular expression needs revision
+
+commit 4e74d957b19b7420acb7469c954bf50168e7ad5a
+Author: NasserDos <nasserbinshabeeb@mail.weber.edu>
+Date:   Sat Mar 18 13:42:55 2017 -0600
+
+    almost done, added log file
+
 commit 3e5b6e6f06ce1772f882d96385a29ec5377f9304
 Author: NasserDos <nasserbinshabeeb@mail.weber.edu>
 Date:   Wed Mar 15 17:35:44 2017 -0600

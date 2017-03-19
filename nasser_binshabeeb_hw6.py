@@ -30,22 +30,22 @@ def get_url(myFile):
     counter = 0
     
 
-    #check regular expression
     with urlopen(myFile) as theFile:
-        for S in theFile:
-            dLine = re.search('(/(\w+))+(.?)(\w+)' ,S.decode("UTF-8"))
+        for byteLine in theFile:
+            dLine = re.search(r"(/(\w+)){1,4}((.?|-?)(\w+))+" ,byteLine.decode("UTF-8"))
             if dLine is not None:
                 dString = dLine.group()
             #print(dString)
-            if not record.__contains__(dString):
-                record[dString] = 1
-            else:
-                record[dString] += 1
+                if not record.__contains__(dString):
+                    record[dString] = 1
+                else:
+                    record[dString] += 1
         for item in sorted(record, key=record.get,reverse=True):
-            print("Count : ", record[item],"Page : ", item)
+            print(counter," Count : ", record[item],"Page : ", item)
             counter += 1
-            if counter == 24:
+            if counter == 25:
                 break
+
 
 
 

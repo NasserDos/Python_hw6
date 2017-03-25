@@ -41,7 +41,7 @@ def get_url(myFile):
                 else:
                     record[dString] += 1
         for item in sorted(record, key=record.get,reverse=True):
-            print(counter," Count : ", record[item],"Page : ", item)
+            print(counter+1," Count : ", record[item],"Page : ", item)
             counter += 1
             if counter == 25:
                 break
@@ -73,7 +73,7 @@ def main():
 
     url = "http://icarus.cs.weber.edu/~hvalle/cs3030/data/error.log.test"
     #url = "http://icarus.cs.weber.edu/~hvalle/cs3030/data/error.log.full"
-    if  len(sys.argv) >1 and len(sys.argv[1]) :
+    if  len(sys.argv) >1 :#and len(sys.argv[1]) :
         url = sys.argv[1]
     
     get_url(url)

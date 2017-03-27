@@ -5,7 +5,7 @@
 # Name : Nasser Binshabeeb
 # 
 #
-# Project Info : Python
+# Project Info : Script to find the top 25 most common error pages
 #
 #
 #################################################
@@ -25,23 +25,40 @@ def get_url(myFile):
         None
 
     """
-    record = {}
-    lineList = []
-    counter = 0
+    record = {} #Will store the matches
+    counter = 0 #Used for numbering top 25
     
-
+    print("Decoding tnd filtering through the file...")  
     with urlopen(myFile) as theFile:
         for byteLine in theFile:
-            dLine = re.search(r"(/(\w+)){1,4}((.?|-?)(\w+))+" ,byteLine.decode("UTF-8"))
-            if dLine is not None:
-                dString = dLine.group()
-            #print(dString)
-                if not record.__contains__(dString):
-                    record[dString] = 1
-                else:
-                    record[dString] += 1
+            #confirm the line contains the word error
+            confirmError1 = re.search(r'(?=error)',byteLine.decode("UTF-8"))
+            if confirmError1 is not None :
+# / followed by a length 3~6 word, (a seperator or none)(words)once or more
+                dLine = re.search(r"/(\w{3,6})((\W?)(\w+))+" ,byteLine.decode("UTF-8"))
+            
+
+                #Another failed attempt
+                #dLine = re.search(r"((/\w{6})|(/\w{3,4}/\w{3,7}(/(\W?\w+)+)))" ,byteLine.decode("UTF-8"))
+                
+                #dictionary entries
+                if dLine is not None:
+                    dString = dLine.group(0)
+                    if dString not in record:
+                        record[dString] = 1
+                    else:
+                        record[dString] += 1
+        print("Decoding complete")
+        print("Sorting dictionary")
+        #These three caused problems
+        record['/icarus.cs.weber.edu'] = 0
+        record['/unix-directory returned invalid result code']= 0
+        record['/var/www/html']=0
+            
+        #sort then print top 25
+        print("*** Top 25 page errors ***")
         for item in sorted(record, key=record.get,reverse=True):
-            print(counter+1," Count : ", record[item],"Page : ", item)
+            print("Count :", record[item],"Page :", item)
             counter += 1
             if counter == 25:
                 break
@@ -69,15 +86,15 @@ def help():
 def main():
     """
     Main function
+    Calls other functions and checks for arguments, makes things more clear
     """
 
-    url = "http://icarus.cs.weber.edu/~hvalle/cs3030/data/error.log.test"
-    #url = "http://icarus.cs.weber.edu/~hvalle/cs3030/data/error.log.full"
-    if  len(sys.argv) >1 :#and len(sys.argv[1]) :
-        url = sys.argv[1]
-    
-    get_url(url)
 
+    if  len(sys.argv) > 1:
+        url = sys.argv[1]
+        get_url(url)
+    else:
+        help()
 
 
 if __name__ == "__main__":
